@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace client.Models.Interfaces
 {
-    public interface IAuthenticationService
+    public interface IRegistrationService 
     {
-        Task<string> Login(string user, string password);
-        Task<bool> Logout(string token);
+        Task<bool> SignUp(string name, string email, string password);
     }
 }

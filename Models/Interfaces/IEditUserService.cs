@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace client.Models.Interfaces
 {
-    public interface IAuthenticationService
+    public interface IEditUserService
     {
-        Task<string> Login(string user, string password);
-        Task<bool> Logout(string token);
+        Task<string> EditUser(string name);
     }
 }
