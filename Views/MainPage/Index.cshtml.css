@@ -140,3 +140,9 @@
 .msg-convert-links{
     margin-bottom: 1rem;
 }
+
+.btn-primary:focus {
+    background-color: #ff4931;
+    outline: none;
+    box-shadow: none;
+}

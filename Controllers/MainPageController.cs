@@ -18,6 +18,10 @@ namespace client.Controllers
         {
             return View("~/Views/MainPage/Profile/Profile.cshtml");
         }
+        public IActionResult MyFiles()
+        {
+            return View("~/Views/MainPage/MyFiles/MyFiles.cshtml");
+        }
 
     }
 }

@@ -1,0 +1,49 @@
+th {
+    border-bottom: 1px solid grey!important;
+    border-top: 1px solid grey!important;
+    height: 67px;
+}
+td {
+    border: 0!important;
+    border-bottom: 0!important;
+    font-weight: 500;
+    font-size: 16px;
+    vertical-align: middle;
+    height: 50px!important;
+}
+
+td, tr {
+    height: 67px;
+}
+
+.nameFiles {
+    text-overflow: ellipsis;
+    max-width: 20px!important;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.txtHead{
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.btnDownload{
+    font-weight: 600;
+    font-size: 16px;
+    background-color: #ff7764;
+    border: none;
+    height: 43px;
+    border-radius: 0.7rem;
+}
+
+.btnDownload:active {
+    border-color: #ff7764;
+    color: #fff;
+}
+
+.btn-primary:focus {
+    background-color: #ff4931;
+    outline: none;
+    box-shadow: none;
+}
