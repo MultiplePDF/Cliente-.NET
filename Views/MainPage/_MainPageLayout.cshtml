@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/client.styles.css" asp-append-version="true" /> 
+    <link rel="stylesheet" href="~/css/global.css" />
+</head>
+<body>
+    <div class="container py-3">
+        <header>
+            <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4">
+                <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                    <span class="fs-4 txtLogo">MultiplePDF</span>
+                </a>
+
+                <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                    <a class="me-3 py-2 text-dark text-decoration-none item-bar" href="/MainPage/Index">Inicio</a>
+                    <a class="me-3 py-2 text-dark text-decoration-none item-bar" href="/MainPage/MyFiles">Mis Archivos</a>
+                    <a class="me-3 py-2 text-dark text-decoration-none item-bar" href="/MainPage/Profile">Perfil</a>
+                </nav>
+            </div>
+
+        </header>
+
+        <div class="container">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>  
+    </div>
+</body>
+</html>

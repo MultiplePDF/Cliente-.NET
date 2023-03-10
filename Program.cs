@@ -1,5 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRazorPages();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -19,9 +21,18 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+// app.UseEndpoints(endpoints => {
 
+//     endpoints.MapControllerRoute(
+//         name: "MainPageHome",
+//         pattern: "/MainPage/Home",
+//         defaults: new { controller = "MainPage", action = "Home" }
+//     );
+
+// });
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
