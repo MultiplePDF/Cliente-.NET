@@ -104,6 +104,8 @@ obj/
 /node_modules
 /wwwroot/node_modules
 
+.vscode/
+
 
 # TFS 2012 Local Workspace
 $tf/
