@@ -22,10 +22,6 @@ namespace client.Controllers
         {
             return View("~/Views/MainPage/MyFiles/MyFiles.cshtml");
         }
-        public IActionResult Downloads()
-        {
-            return View("~/Views/MainPage/Downloads/Downloads.cshtml");
-        }
 
     }
 }
