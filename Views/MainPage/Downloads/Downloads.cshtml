@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "My Files";
+    Layout = "_MainPageLayout";
+}
+<!DOCTYPE html>
+<body>
+    <div class="container text-center container-card">
+        <div class="row gx-2">
+            <div class="col" style="margin-top: 80px;">
+                <div class="p-1 card card-box" style="height: 550px; width: 350px; box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2) ;border-radius: 0.7rem;">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <a style="text-align: center; font-size: 50px;margin-bottom: 70px;"><b>¡Listo!</b></a>
+                        <p style="text-align: center; font-size: 20px; margin-bottom: 30px;">Tus archivos han sido <br>transformados.&nbsp;<br>Descárgalos aquí</p>
+                        <button class="btn btn-primary" type="button"
+                            style="text-align: center;background: rgb(255,119,100);padding: 10px 45px; font-size: 20px;border-radius: 2rem "> <b>Descargar</b></button>
+                        <p style="text-align: center; font-size: 20px; margin-top: 20px;">O</p>
+                        <p style="text-align: center; font-size: 20px;">Miralo en tus archivos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8"><img src="~/images/image.png" style="width: 700px;height: 700px;text-align: justify;">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
