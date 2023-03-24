@@ -1,7 +1,86 @@
 .form-group {
     display: block;
+    margin-top: 1rem;
+}
+
+.form-group-first {
+    margin-top: 2rem;
 }
 
 .register-button {
     margin-top: 10px;
+}
+
+.register-form-container {
+    padding-left: 6rem;
+    padding-right: 6rem;
+    width: 100%;
+    max-width: 650px;
+}
+
+.register-title {
+    font-weight: bold;
+    font-size: 2rem;
+    display: block;
+    color: #181a50;
+}
+
+.register-text-small {
+    display: block;
+    font-size: 0.8rem;
+    color: #181a50;
+}
+
+.label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #181a50;
+}
+
+.form-input {
+    width: 100%;
+    display: inline-block;
+    padding: 8px 20px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.form-input:focus {
+    outline: 1px solid #ff4931;
+}
+
+.register-button {
+    margin-top: 1rem;
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #ff7764;
+    border: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.register-button:hover {
+    background-color: #ff4931;
+}
+
+.register-button:active {
+    transform: scale(0.95);
+}
+
+.login-message {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.msg-login-now {
+    font-size: 0.8rem;
+    color: #ff4931;
 }
