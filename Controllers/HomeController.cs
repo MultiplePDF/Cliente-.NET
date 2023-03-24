@@ -17,6 +17,10 @@ public class HomeController : Controller
     {
         return View("~/Views/Home/Login/loginForm.cshtml");
     }
+    public IActionResult Register()
+    {
+        return View("~/Views/Home/Register/RegisterForm.cshtml");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
