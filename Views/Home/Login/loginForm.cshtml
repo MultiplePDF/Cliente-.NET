@@ -2,21 +2,23 @@
     ViewData["Title"] = "Login Form";   
     Layout="_HomeLayout";
 }
+@model UserModel
+
 <div class="login-form-container">
-    <form class="Login-Form" action="/mainpage" method="POST">
+    <form class="Login-Form" method="POST" asp-controller="Auth" asp-action="LoginService">
         <span class="login-title">Inicio de sesión</span>
         <span class="login-text-small">Inicia sesión ahora para utilizar todas 
             las funciones de nuestra plataforma</span>
 
         <div class="form-group form-group-first">
-            <label class="label" for="username">Email</label>
+            <label class="label"  for="username">Email</label>
             <br>
-            <input class="form-input" type="email" id="email" name="email" required> 
+            <input  class="form-input" type="email" id="Email" name="Email" required>
         </div>
         <div class="form-group">
             <label class="label" for="password">Contraseña</label>
             <br>
-            <input class="form-input" type="password" id="password" name="password" required>
+            <input class="form-input" type="password" id="Password" name="Password" required>
         </div>
 
         <div class="forgot-password">
@@ -27,8 +29,13 @@
         <div class="register-message">
             ¿No tienes cuenta? <a href="/Home/Register" class="msg-resgister-now">¡Regístrate ahora!</a>
         </div>
-        
     </form>
+
+    <script>
+        function saveTokenToLocalStorage(token) {
+            localStorage.setItem('token', token);
+        }
+    </script>
 </div>
 
 

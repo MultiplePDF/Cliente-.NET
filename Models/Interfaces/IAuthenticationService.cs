@@ -7,7 +7,6 @@ namespace client.Models.Interfaces
 {
     public interface IAuthenticationService
     {
-        Task<string> Login(string user, string password);
-        Task<bool> Logout(string token);
+        Task<string> Login(string email, string password);
     }
 }
