@@ -13,12 +13,27 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    private IActionResult RedirectToMainIfTokenExists()
+    {
+        if (Request.Cookies["token"] != null)
+        {
+            // If it exists, redirect to MainPage
+            return RedirectToAction("Index", "MainPage");
+        }
+        return null;
+    }
+
+
     public IActionResult Index()
     {
+        IActionResult result = RedirectToMainIfTokenExists();
+        if (result != null) return result;
         return View("~/Views/Home/Login/loginForm.cshtml");
     }
     public IActionResult Register()
     {
+        IActionResult result = RedirectToMainIfTokenExists();
+        if (result != null) return result;
         return View("~/Views/Home/Register/RegisterForm.cshtml");
     }
 

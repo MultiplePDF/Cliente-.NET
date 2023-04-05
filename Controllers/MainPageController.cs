@@ -10,21 +10,31 @@ namespace client.Controllers
 {
     public class MainPageController : Controller
     {
+        private IActionResult RedirectToMainIfTokenExists(string viewName)
+        {
+            if (Request.Cookies["token"] == null)
+            {
+                // If it exists, redirect to MainPage
+                return RedirectToAction("Index", "Home");
+            }
+            return View(viewName);
+        }
+
         public IActionResult Index()
         {
-            return View();
+            return RedirectToMainIfTokenExists(null);
         }
         public IActionResult Profile()
         {
-            return View("~/Views/MainPage/Profile/Profile.cshtml");
+            return RedirectToMainIfTokenExists("~/Views/MainPage/Profile/Profile.cshtml");
         }
         public IActionResult MyFiles()
         {
-            return View("~/Views/MainPage/MyFiles/MyFiles.cshtml");
+            return RedirectToMainIfTokenExists("~/Views/MainPage/MyFiles/MyFiles.cshtml");
         }
         public IActionResult Downloads()
         {
-            return View("~/Views/MainPage/Downloads/Downloads.cshtml");
+            return RedirectToMainIfTokenExists("~/Views/MainPage/Downloads/Downloads.cshtml");
         }
 
     }
