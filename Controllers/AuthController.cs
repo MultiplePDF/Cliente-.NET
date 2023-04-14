@@ -3,7 +3,6 @@ using client.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ServiceReference1;
 using System.Text;
 
 namespace client.Controllers
