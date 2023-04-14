@@ -34,7 +34,6 @@ namespace client.Controllers
                 var fileName = fileItem.FileName;
                 var fileContent = string.Empty;
                 var fileSizeInMb = (double)fileItem.Length / 1000000;
-                Console.WriteLine(fileSizeInMb);
                 using (var streamReader = new StreamReader(fileItem.OpenReadStream()))
                 {
                     fileContent = await streamReader.ReadToEndAsync();
