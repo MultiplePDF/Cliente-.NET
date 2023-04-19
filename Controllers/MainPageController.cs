@@ -29,31 +29,44 @@ namespace client.Controllers
         public async Task<IActionResult> Upload(List<IFormFile> file)
         {
             var results = new List<object>();
+            var idFile = 0;
             foreach (var fileItem in file)
             {
+                idFile++;
                 var fileName = fileItem.FileName;
+                FileInfo fi = new FileInfo(fileName);
+                var fileNameExt = fi.Extension;
+                string[] subs = fileName.Split('.');
+                var justFileName = subs[0];
+
                 var fileContent = string.Empty;
-                var fileSizeInMb = (double)fileItem.Length / 1000000;
-                using (var streamReader = new StreamReader(fileItem.OpenReadStream()))
-                {
-                    fileContent = await streamReader.ReadToEndAsync();
-                }
-                var base64String = Convert.ToBase64String(Encoding.UTF8.GetBytes(fileContent));
+                var fileSizeInKb = (double)fileItem.Length / 1000;
+                StreamReader sr = new StreamReader(fileItem.OpenReadStream());
+
+                var memoryStream = new MemoryStream();
+                fileItem.OpenReadStream().CopyTo(memoryStream);
+                byte[] byteArray = memoryStream.ToArray();
+
+
+                var base64String = Convert.ToBase64String(byteArray);
                 var fileInfo = new
                 {
-                    fileName,
-                    size = fileSizeInMb,
-                    base64 = base64String
+                    idFile = idFile,
+                    base64 = base64String,
+                    fileName = justFileName,
+                    fileExtension = fileNameExt,
+                    size = fileSizeInKb,
                 };
 
                 results.Add(fileInfo);
-
-
             }
             var json = JsonConvert.SerializeObject(results);
             return Content(json, "application/json");
             //return RedirectToAction("Index");
         }
+
+
+
 
         public IActionResult Index()
         {
