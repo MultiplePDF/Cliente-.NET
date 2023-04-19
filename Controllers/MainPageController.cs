@@ -40,7 +40,7 @@ namespace client.Controllers
                 var justFileName = subs[0];
 
                 var fileContent = string.Empty;
-                var fileSizeInKb = (double)fileItem.Length / 1000;
+                var fileSizeInKb = (int)fileItem.Length / 1000;
                 StreamReader sr = new StreamReader(fileItem.OpenReadStream());
 
                 var memoryStream = new MemoryStream();
