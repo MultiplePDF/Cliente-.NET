@@ -1,9 +1,6 @@
 ﻿using client.Models;
 using client.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Text;
 
 namespace client.Controllers
 {

@@ -1,15 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace client.Controllers
 {
     public class MainPageController : Controller
     {
+        private readonly ILogger<MainPageController> _logger;
+        private IWebHostEnvironment hostingEnvironment;
+
+        public MainPageController(ILogger<MainPageController> logger, IWebHostEnvironment hostingEnvironment)
+        {
+            _logger = logger;
+            this.hostingEnvironment = hostingEnvironment;
+        }
+
         private IActionResult RedirectToMainIfTokenExists(string viewName)
         {
             if (Request.Cookies["token"] == null)
@@ -19,6 +24,49 @@ namespace client.Controllers
             }
             return View(viewName);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Upload(List<IFormFile> file)
+        {
+            var results = new List<object>();
+            var idFile = 0;
+            foreach (var fileItem in file)
+            {
+                idFile++;
+                var fileName = fileItem.FileName;
+                FileInfo fi = new FileInfo(fileName);
+                var fileNameExt = fi.Extension;
+                string[] subs = fileName.Split('.');
+                var justFileName = subs[0];
+
+                var fileContent = string.Empty;
+                var fileSizeInKb = (int)fileItem.Length / 1000;
+                StreamReader sr = new StreamReader(fileItem.OpenReadStream());
+
+                var memoryStream = new MemoryStream();
+                fileItem.OpenReadStream().CopyTo(memoryStream);
+                byte[] byteArray = memoryStream.ToArray();
+
+
+                var base64String = Convert.ToBase64String(byteArray);
+                var fileInfo = new
+                {
+                    idFile = idFile,
+                    base64 = base64String,
+                    fileName = justFileName,
+                    fileExtension = fileNameExt,
+                    size = fileSizeInKb,
+                };
+
+                results.Add(fileInfo);
+            }
+            var json = JsonConvert.SerializeObject(results);
+            return Content(json, "application/json");
+            //return RedirectToAction("Index");
+        }
+
+
+
 
         public IActionResult Index()
         {
