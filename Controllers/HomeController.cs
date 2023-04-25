@@ -37,6 +37,13 @@ public class HomeController : Controller
         return View("~/Views/Home/Register/RegisterForm.cshtml");
     }
 
+    public IActionResult Welcome()
+    {
+        IActionResult result = RedirectToMainIfTokenExists();
+        if (result != null) return result;
+        return View("~/Views/Home/Main/Inicio.cshtml");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
