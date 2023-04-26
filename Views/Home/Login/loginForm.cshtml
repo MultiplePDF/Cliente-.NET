@@ -1,8 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Login Form";   
-    Layout="_HomeLayout";
+    Layout="/Views/Home/_HomeLayout.cshtml";
 }
-@model UserModel
+@model LoginModel
 
 <div class="login-form-container">
     <form class="Login-Form" method="POST" asp-controller="Auth" asp-action="LoginService">
@@ -19,6 +19,9 @@
             <label class="label" for="password">Contraseña</label>
             <br>
             <input class="form-input" type="password" id="Password" name="Password" required>
+            <span class="error-login">
+                @Html.ValidationMessageFor(m=>m.Password)
+            </span>
         </div>
 
         <div class="forgot-password">
@@ -26,16 +29,17 @@
         </div>
 
         <button class="login-button" >Iniciar sesión</button>
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div>
+                <br>
+                <span class="error-login">@ViewData["ErrorMessage"]</span>
+            </div>
+        }
         <div class="register-message">
             ¿No tienes cuenta? <a href="/Home/Register" class="msg-resgister-now">¡Regístrate ahora!</a>
         </div>
     </form>
-
-    <script>
-        function saveTokenToLocalStorage(token) {
-            localStorage.setItem('token', token);
-        }
-    </script>
 </div>
 
 
