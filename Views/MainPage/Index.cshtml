@@ -33,7 +33,13 @@
                         <button type="submit" class="w-50 btn btn-primary btnFiles">Convertir Archivos</button>
                     </div>
                 </form>
-
+                @if (ViewData["ErrorMessage"] != null)
+                {
+                    <div>
+                        <br>
+                        <span class="error-upload">@ViewData["ErrorMessage"]</span>
+                    </div>
+                }
             </div>
             <div class="linea w-100">
                 <div class="circulo"></div>

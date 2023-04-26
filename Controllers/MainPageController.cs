@@ -1,6 +1,8 @@
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using ServiceReference1;
+
 
 namespace client.Controllers
 {
@@ -50,7 +52,6 @@ namespace client.Controllers
                 fileItem.OpenReadStream().CopyTo(memoryStream);
                 byte[] byteArray = memoryStream.ToArray();
 
-
                 var base64String = Convert.ToBase64String(byteArray);
                 var fileInfo = new
                 {
@@ -65,8 +66,31 @@ namespace client.Controllers
                 results.Add(fileInfo);
             }
             var json = JsonConvert.SerializeObject(results);
-            return Content(json, "application/json");
+
+            //Send to batch 
+            var token = HttpContext.Request.Cookies["token"];
+            var res = ConvertFiles(json, "token");
+            var download = res.downloadPath;
+
+            if (res.successful)
+            {
+                ViewData["ErrorMessage"] = res.response;
+                return View("Views/MainPage/Index.cshtml"); 
+            }
+
+            return Content(download, "application/json");
             //return RedirectToAction("Index");
+        }
+
+        public sendBatchResponse ConvertFiles(String json, String token) {
+            MultiplepdfPortClient client = new();
+            sendBatchRequest req = new();
+            req.listJSON = json;
+            req.token = token;
+            sendBatchResponse res = client.sendBatch(req);
+            Console.WriteLine(res.response);
+            Console.WriteLine("link " + res.downloadPath);
+            return res;
         }
 
         public string GetSha256HashFromIFormFile(IFormFile file)
