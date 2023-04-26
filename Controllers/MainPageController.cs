@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -43,6 +44,9 @@ namespace client.Controllers
                 var fileSizeInKb = (int)fileItem.Length / 1000;
                 StreamReader sr = new StreamReader(fileItem.OpenReadStream());
 
+                //SHA256
+                String checksum = GetSha256HashFromIFormFile(fileItem);
+
                 var memoryStream = new MemoryStream();
                 fileItem.OpenReadStream().CopyTo(memoryStream);
                 byte[] byteArray = memoryStream.ToArray();
@@ -56,6 +60,7 @@ namespace client.Controllers
                     fileName = justFileName,
                     fileExtension = fileNameExt,
                     size = fileSizeInKb,
+                    checksum = checksum
                 };
 
                 results.Add(fileInfo);
@@ -65,6 +70,14 @@ namespace client.Controllers
             //return RedirectToAction("Index");
         }
 
+        public string GetSha256HashFromIFormFile(IFormFile file)
+        {
+            using var stream = file.OpenReadStream();
+            using var sha256 = SHA256.Create();
+            var hashBytes = sha256.ComputeHash(stream);
+            var hashString = BitConverter.ToString(hashBytes).Replace("-", "");
+            return hashString;
+        }
 
 
 
