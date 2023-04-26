@@ -19,7 +19,9 @@
             <label class="label" for="password">Contraseña</label>
             <br>
             <input class="form-input" type="password" id="Password" name="Password" required>
-            @Html.ValidationMessageFor(m=>m.Password)
+            <span class="error-login">
+                @Html.ValidationMessageFor(m=>m.Password)
+            </span>
         </div>
 
         <div class="forgot-password">
