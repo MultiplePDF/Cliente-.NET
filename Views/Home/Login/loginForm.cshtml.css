@@ -1,3 +1,7 @@
+.error-login {
+    color: red;
+}
+
 .form-group {
     display: block;
     margin-top: 1rem;

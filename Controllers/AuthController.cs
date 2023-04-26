@@ -1,40 +1,46 @@
 ﻿using client.Models;
 using client.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using ServiceReference1;
-using System.Reflection;
 
 namespace client.Controllers
 {
     public class AuthController : Controller, IAuthenticationService
     {
 
-        public async Task<string> Login(string email, string password)
+        public async Task<loginResponse> Login(LoginModel model)
         {
-            //...Logic
-            string responseToken = "fiudh121io4u120912";
-            return responseToken;
+            MultiplepdfPortClient client = new();
+            loginRequest req = new();
+            req.email = model.Email;
+            req.password = model.Password;
+            loginResponse res = client.login(req);
+            return res;
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> LoginService(UserModel model)
+        public async Task<ActionResult<string>> LoginService(LoginModel model)
         {
-            var email = model.Email;
-            var password = model.Password;
-            // Call Login
-            var token = await Login(email, password);
-
-            if (token != null) // If a valid token is obtained
+            if (ModelState.IsValid)
             {
-                // Set token in localStorage
-                HttpContext.Response.Cookies.Append("token", token, new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(7) });
-                // Redirect to MainPage with token
-                return RedirectToAction("Index", "MainPage");
+                // Call Login
+                var res = await Login(model);
+                var token = res.token;
+                if (String.IsNullOrEmpty(token))
+                {
+                    ViewData["ErrorMessage"] = res.response;
+                    // procesar la solicitud de registro
+                    return View("Views/Home/Login/loginForm.cshtml", model);
+                }
+                else
+                {
+                    HttpContext.Response.Cookies.Append("token", token, new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(7) });
+                    return RedirectToAction("Index", "MainPage");
+                }
             }
-            else // If an invalid token is obtained
+            else
             {
-                return RedirectToAction("Index", "Home");
+                return View("Views/Home/Login/loginForm.cshtml", model);
             }
         }
 
@@ -61,7 +67,6 @@ namespace client.Controllers
             }
             else
             {
-                // devolver una respuesta con errores de validación
                 return View("Views/Home/Register/RegisterForm.cshtml", model);
             }
         }
