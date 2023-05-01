@@ -23,7 +23,6 @@ public class HomeController : Controller
         return null;
     }
 
-
     public IActionResult Index()
     {
         IActionResult result = RedirectToMainIfTokenExists();
@@ -37,7 +36,7 @@ public class HomeController : Controller
         return View("~/Views/Home/Register/RegisterForm.cshtml");
     }
 
-    public IActionResult Welcome()
+    public IActionResult Inicio()
     {
         IActionResult result = RedirectToMainIfTokenExists();
         if (result != null) return result;
