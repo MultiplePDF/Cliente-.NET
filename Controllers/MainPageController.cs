@@ -39,6 +39,7 @@ namespace client.Controllers
                 FileInfo fi = new FileInfo(fileName);
                 var fileNameExt = fi.Extension;
                 string[] subs = fileName.Split('.');
+                String justFileName = subs[0];
 
                 var fileContent = string.Empty;
                 var fileSizeInKb = (int)fileItem.Length / 1000;
@@ -56,7 +57,7 @@ namespace client.Controllers
                 {
                     idFile = idFile,
                     base64 = base64String,
-                    fileName = fileName,
+                    fileName = justFileName,
                     fileExtension = fileNameExt,
                     size = fileSizeInKb,
                     checksum = checksum
