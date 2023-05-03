@@ -23,20 +23,30 @@ namespace client.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Call Login
-                var res = await Login(model);
-                var token = res.token;
-                if (String.IsNullOrEmpty(token))
+                try
                 {
-                    ViewData["ErrorMessage"] = res.response;
+                    // Call Login
+                    var res = await Login(model);
+                    var token = res.token;
+                    if (String.IsNullOrEmpty(token))
+                    {
+                        ViewData["ErrorMessage"] = res.response;
+                        // procesar la solicitud de registro
+                        return View("Views/Home/Login/loginForm.cshtml", model);
+                    }
+                    else
+                    {
+                        HttpContext.Response.Cookies.Append("token", token, new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(7) });
+                        return RedirectToAction("Index", "MainPage");
+                    }
+                }
+                catch (System.Exception)
+                {
+                    ViewData["ErrorMessage"] = "Ha ocurrido un error al iniciar sesión";
                     // procesar la solicitud de registro
                     return View("Views/Home/Login/loginForm.cshtml", model);
                 }
-                else
-                {
-                    HttpContext.Response.Cookies.Append("token", token, new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(7) });
-                    return RedirectToAction("Index", "MainPage");
-                }
+
             }
             else
             {

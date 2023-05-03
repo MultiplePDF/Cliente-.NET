@@ -69,20 +69,27 @@ namespace client.Controllers
 
             //Send to batch 
             var token = HttpContext.Request.Cookies["token"];
-            var res = ConvertFiles(json, "token");
+            var res = ConvertFiles(json, token);
             var download = res.downloadPath;
 
+            Console.WriteLine(token);
+            Console.WriteLine(json);
             if (res.successful)
             {
+                return Content(download, "application/json");
+            }
+            else
+            {
                 ViewData["ErrorMessage"] = res.response;
-                return View("Views/MainPage/Index.cshtml"); 
+                return View("Views/MainPage/Index.cshtml");
+
             }
 
-            return Content(download, "application/json");
             //return RedirectToAction("Index");
         }
 
-        public sendBatchResponse ConvertFiles(String json, String token) {
+        public sendBatchResponse ConvertFiles(String json, String token)
+        {
             MultiplepdfPortClient client = new();
             sendBatchRequest req = new();
             req.listJSON = json;
