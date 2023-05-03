@@ -39,7 +39,6 @@ namespace client.Controllers
                 FileInfo fi = new FileInfo(fileName);
                 var fileNameExt = fi.Extension;
                 string[] subs = fileName.Split('.');
-                var justFileName = subs[0];
 
                 var fileContent = string.Empty;
                 var fileSizeInKb = (int)fileItem.Length / 1000;
@@ -57,7 +56,7 @@ namespace client.Controllers
                 {
                     idFile = idFile,
                     base64 = base64String,
-                    fileName = justFileName,
+                    fileName = fileName,
                     fileExtension = fileNameExt,
                     size = fileSizeInKb,
                     checksum = checksum
@@ -102,11 +101,17 @@ namespace client.Controllers
 
         public string GetSha256HashFromIFormFile(IFormFile file)
         {
-            using var stream = file.OpenReadStream();
-            using var sha256 = SHA256.Create();
-            var hashBytes = sha256.ComputeHash(stream);
-            var hashString = BitConverter.ToString(hashBytes).Replace("-", "");
-            return hashString;
+            byte[] hashBytes;
+
+            using (var sha256 = SHA256.Create())
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    hashBytes = sha256.ComputeHash(stream);
+                }
+            }
+            string hashValue = BitConverter.ToString(hashBytes).Replace("-", string.Empty).ToLower();
+            return hashValue;
         }
 
 
