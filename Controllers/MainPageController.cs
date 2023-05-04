@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ServiceReference1;
@@ -38,10 +39,13 @@ namespace client.Controllers
                 var fileName = fileItem.FileName;
                 FileInfo fi = new FileInfo(fileName);
                 var fileNameExt = fi.Extension;
-                string[] subs = fileName.Split('.');
-                String justFileName = subs[0];
+                String justFileName = Path.GetFileNameWithoutExtension(fileName);
 
-                var fileContent = string.Empty;
+                //Unique name
+                string fileNameWithoutSpecialChars = Regex.Replace(justFileName, "[^0-9a-zA-Z._-]", "");
+                string uniqueName = DateTime.Now.Ticks.ToString() + "_" + fileNameWithoutSpecialChars;
+
+                //Size
                 var fileSizeInKb = (int)fileItem.Length / 1000;
                 StreamReader sr = new StreamReader(fileItem.OpenReadStream());
 
@@ -57,7 +61,7 @@ namespace client.Controllers
                 {
                     idFile = idFile,
                     base64 = base64String,
-                    fileName = justFileName,
+                    fileName = uniqueName,
                     fileExtension = fileNameExt,
                     size = fileSizeInKb,
                     checksum = checksum
@@ -67,16 +71,16 @@ namespace client.Controllers
             }
             var json = JsonConvert.SerializeObject(results);
 
+            return Content(json, "application/json");
+
             //Send to batch 
             var token = HttpContext.Request.Cookies["token"];
             var res = ConvertFiles(json, token);
             var download = res.downloadPath;
 
-            Console.WriteLine(token);
-            Console.WriteLine(json);
             if (res.successful)
             {
-                return Content(download, "application/json");
+                return View("Views/MainPage/Downloads/Downloads.cshtml");
             }
             else
             {
@@ -95,8 +99,6 @@ namespace client.Controllers
             req.listJSON = json;
             req.token = token;
             sendBatchResponse res = client.sendBatch(req);
-            Console.WriteLine(res.response);
-            Console.WriteLine("link " + res.downloadPath);
             return res;
         }
 
