@@ -80,7 +80,6 @@ namespace client.Controllers
             //Send to batch 
             var token = HttpContext.Request.Cookies["token"];
             var res = ConvertFiles(json, token);
-            var download = res.downloadPath;
 
             if (res.successful)
             {
@@ -92,10 +91,47 @@ namespace client.Controllers
                 return View("Views/MainPage/Index.cshtml");
 
             }
-
-            //return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> UploadLinks(string links)
+        {
+            var idFile = 0;
+            if (string.IsNullOrEmpty(links))
+            {
+                return View("Views/MainPage/Index.cshtml");
+            }
+            var results = new List<object>();
+            var listLinks = links.Split(",");
+            var validLinks = new List<string>();
+            Regex regex = new Regex(@"^(http|https)://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,63}(/\S*)?$");
 
+            foreach (var link in listLinks)
+            {
+                if (regex.IsMatch(link.Trim()))
+                {
+                    idFile++;
+                    var fileInfo = new
+                    {
+                        idFile = idFile,
+                        base64 = link,
+                        fileName = "",
+                        fileExtension = "URL",
+                        size = 1,
+                        checksum = "",
+                    };
+
+                    results.Add(fileInfo);
+                }
+            }
+
+            var json = JsonConvert.SerializeObject(results);
+
+            var token = HttpContext.Request.Cookies["token"];
+            var res = ConvertFiles(json, token);
+
+
+            return View("Views/MainPage/Downloads/Downloads.cshtml");
+        }
         public sendBatchResponse ConvertFiles(String json, String token)
         {
             MultiplepdfPortClient client = new();
