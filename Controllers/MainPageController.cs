@@ -18,6 +18,12 @@ namespace client.Controllers
             this.hostingEnvironment = hostingEnvironment;
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Response.Cookies.Delete("token");
+            return RedirectToAction("Index", "Home");
+        }
+
         private IActionResult RedirectToMainIfTokenExists(string viewName)
         {
             if (Request.Cookies["token"] == null)
