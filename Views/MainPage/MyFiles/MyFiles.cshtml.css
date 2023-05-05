@@ -1,49 +1,69 @@
 th {
-    border-bottom: 1px solid grey!important;
-    border-top: 1px solid grey!important;
+    border-bottom: 1px solid grey !important;
+    border-top: 1px solid grey !important;
     height: 67px;
 }
+
 td {
-    border: 0!important;
-    border-bottom: 0!important;
+    border: 0 !important;
+    border-bottom: 0 !important;
     font-weight: 500;
     font-size: 16px;
     vertical-align: middle;
-    height: 50px!important;
+    height: 50px !important;
 }
 
-td, tr {
+td,
+tr {
     height: 67px;
 }
 
 .nameFiles {
     text-overflow: ellipsis;
-    max-width: 20px!important;
+    max-width: 20px !important;
     overflow: hidden;
     white-space: nowrap;
 }
 
-.txtHead{
+.txtHead {
     font-weight: 700;
     font-size: 20px;
 }
 
-.btnDownload{
-    font-weight: 600;
-    font-size: 16px;
-    background-color: #ff7764;
+.link-my-files {
+    text-decoration: none;
+}
+
+.btn-folder {
+    display: inline;
+    padding: 0;
     border: none;
-    height: 43px;
-    border-radius: 0.7rem;
+    background: none;
+    color: #ff7764;
+    font-size: 1.3rem;
 }
 
-.btnDownload:active {
-    border-color: #ff7764;
-    color: #fff;
+.btn-download {
+    display: inline-block;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #ff7764;
+    margin-right: 1rem;
+    font-size: 1.3rem;
 }
 
-.btn-primary:focus {
-    background-color: #ff4931;
-    outline: none;
-    box-shadow: none;
+.btn-folder:active,
+.btn-download:active {
+    color: #3F51B5;
+    transform: translateY(2px);
+}
+
+@media screen and (max-width: 768px) {
+
+    .btn-folder,
+    .btn-download {
+        font-size: 1em;
+        margin-right: 0.5rem;
+    }
 }

@@ -1,8 +1,10 @@
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using ServiceReference1;
+
 
 
 namespace client.Controllers
@@ -77,8 +79,6 @@ namespace client.Controllers
             }
             var json = JsonConvert.SerializeObject(results);
 
-            return Content(json, "application/json");
-
             //Send to batch 
             var token = HttpContext.Request.Cookies["token"];
             var res = ConvertFiles(json, token);
@@ -122,9 +122,6 @@ namespace client.Controllers
             string hashValue = BitConverter.ToString(hashBytes).Replace("-", string.Empty).ToLower();
             return hashValue;
         }
-
-
-
         public IActionResult Index()
         {
             return RedirectToMainIfTokenExists(null);
@@ -133,9 +130,31 @@ namespace client.Controllers
         {
             return RedirectToMainIfTokenExists("~/Views/MainPage/Profile/Profile.cshtml");
         }
-        public IActionResult MyFiles()
+        public async Task<IActionResult> MyFiles()
         {
-            return RedirectToMainIfTokenExists("~/Views/MainPage/MyFiles/MyFiles.cshtml");
+            if (Request.Cookies["token"] == null)
+            {
+                // If it exists, redirect to MainPage
+                return RedirectToAction("Index", "Home");
+            }
+            var list = await GetFilesDetails();
+            var model = new BatchListModel
+            {
+                objectList = list
+            };
+            return View("~/Views/MainPage/MyFiles/MyFiles.cshtml", model);
+        }
+
+        public async Task<List<dynamic>> GetFilesDetails()
+        {
+            string token = Request.Cookies["token"]!;
+            MultiplepdfPortClient client = new();
+            getBatchDetailsRequest req = new();
+            req.token = token;
+            getBatchDetailsResponse res = client.getBatchDetails(req);
+            List<dynamic> list = JsonConvert.DeserializeObject<List<dynamic>>(res.batchesList);
+            // Console.WriteLine(list[0]);
+            return list;
         }
         public IActionResult Downloads()
         {
