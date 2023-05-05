@@ -504,26 +504,10 @@ namespace ServiceReference1
     public partial class getBatchDetailsRequest
     {
         
-        private string userIDField;
-        
         private string tokenField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string userID
-        {
-            get
-            {
-                return this.userIDField;
-            }
-            set
-            {
-                this.userIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public string token
         {
             get
@@ -544,15 +528,7 @@ namespace ServiceReference1
     public partial class getBatchDetailsResponse
     {
         
-        private string dateCreatedField;
-        
-        private int fileQuantityField;
-        
-        private string pathField;
-        
-        private string timeExpirationField;
-        
-        private bool stateField;
+        private string batchesListField;
         
         private string responseField;
         
@@ -560,76 +536,20 @@ namespace ServiceReference1
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string dateCreated
+        public string batchesList
         {
             get
             {
-                return this.dateCreatedField;
+                return this.batchesListField;
             }
             set
             {
-                this.dateCreatedField = value;
+                this.batchesListField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int fileQuantity
-        {
-            get
-            {
-                return this.fileQuantityField;
-            }
-            set
-            {
-                this.fileQuantityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string path
-        {
-            get
-            {
-                return this.pathField;
-            }
-            set
-            {
-                this.pathField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string timeExpiration
-        {
-            get
-            {
-                return this.timeExpirationField;
-            }
-            set
-            {
-                this.timeExpirationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public bool state
-        {
-            get
-            {
-                return this.stateField;
-            }
-            set
-            {
-                this.stateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
         public string response
         {
             get
@@ -643,7 +563,7 @@ namespace ServiceReference1
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
         public bool successful
         {
             get
@@ -808,14 +728,30 @@ namespace ServiceReference1
     public partial class changePasswordRequest
     {
         
+        private string tokenField;
+        
         private string oldPasswordField;
         
         private string newPasswordField;
         
-        private string tokenField;
+        private string confirmPasswordField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string token
+        {
+            get
+            {
+                return this.tokenField;
+            }
+            set
+            {
+                this.tokenField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public string oldPassword
         {
             get
@@ -829,7 +765,7 @@ namespace ServiceReference1
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
         public string newPassword
         {
             get
@@ -843,16 +779,16 @@ namespace ServiceReference1
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string token
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string confirmPassword
         {
             get
             {
-                return this.tokenField;
+                return this.confirmPasswordField;
             }
             set
             {
-                this.tokenField = value;
+                this.confirmPasswordField = value;
             }
         }
     }
