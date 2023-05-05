@@ -3,6 +3,8 @@
     Layout = "_MainPageLayout";
 }
 
+@model ProfileViewModel
+
 <!DOCTYPE html>
 <body>
     <div class="container text-center container-card">
@@ -13,10 +15,37 @@
                         <div class="profile-image mb-4">
                             <img src="../Images/imgprofile.jpg" alt="Imagen de perfil">
                         </div>
-                        <span class="name mb-2" >Diego Arbeláez</span>
-                        <span class="email" >diego.arbelaez.2015@upb.edu.co</span>
+                        <span class="name mb-2" >@Model.UserDetails.name</span>
+                        <span class="email" >@Model.UserDetails.email</span>
+                        <div class="edit-user-form">
+                                <form method="POST" asp-controller="MainPage" asp-action="UpdateUserDetailsService">
+                                <div class="form-group form-group-first">
+                                    <label class="label" for="username">Nombre de usuario:</label>
+                                    <br>
+                                    <input class="form-input" type="text" id="username" name="Username" required>
+                                    <span class="error-edit">
+                                        @Html.ValidationMessageFor(m=>m.UserEdit.Username)
+                                    </span> 
+                                </div>
+                                <div class="form-group">
+                                    <label class="label" for="email">Email:</label>
+                                    <br>
+                                    <input class="form-input" type="email" id="email" name="Email" required>
+                                </div>
 
-                        <div class="d-flex flex-column mb-2 btnProfile mb-4">
+                                <button class="register-button" type="submit">Guardar</button>
+
+                                @if (ViewData["ErrorMessage"] != null)
+                                {
+                                                    <div>
+                                                        <br>
+                                                        <span class="error-register">@ViewData["ErrorMessage"]</span>
+                                                    </div>
+                                }
+                            </form>
+                        </div>
+
+                        @* <div class="d-flex flex-column mb-2 btnProfile mb-4">
                             <a href="#" class="btn btn-primary btmProfileX d-flex flex-column justify-content-center align-items-center">Cambiar Nombre</a>
                         </div>
                         <div class="d-flex flex-column mb-2 btnProfile mb-4">
@@ -27,7 +56,7 @@
                         </div>
                         <div class="d-flex flex-column mb-2 btnProfile">
                             <a href="#" class="btn btn-primary btmProfileX d-flex flex-column justify-content-center align-items-center">Eliminar Cuenta</a>
-                        </div>
+                        </div> *@
                     </div>
                 </div>
             </div>
