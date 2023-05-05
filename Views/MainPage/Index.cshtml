@@ -44,10 +44,18 @@
             <div class="linea w-100">
                 <div class="circulo"></div>
             </div>
-            <span class="msgLinks msg-upload msg-convert-links">Ingresa los links a convertir</span>
-            <div class="input-group mb-3 inputLinks">
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div> 
+            <span class="msgLinks msg-upload msg-convert-links">Ingresa los links a convertir separados por ","</span>
+            <div class="form-links">
+                <form method="post" action='@Url.Action("UploadLinks", "MainPage")'>
+                    <div class="input-group mb-3 inputLinks">
+                        <input type="text" id="link-input" class="form-control" name="links" 
+                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                        <button class="btn btn-success" type="submit">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div> 
     </div>
 
