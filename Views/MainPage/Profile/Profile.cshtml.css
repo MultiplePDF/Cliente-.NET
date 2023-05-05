@@ -1,3 +1,7 @@
+.edit-user-form {
+    width: 80%;
+}
+
 .card-box {
     height: 590px;
     width: 470px;
@@ -25,21 +29,76 @@
     object-fit: cover;
 }
 
-.name{
+.name {
     font-weight: 700;
     font-size: 20px;
 }
 
-.email{
+.email {
     font-weight: 500;
     font-size: 16px;
-    margin-bottom: 3.5rem;
 }
 
-.btmProfileX{
+.btmProfileX {
     background-color: #5064cc;
     border-radius: 0.7rem;
     font-size: 16px;
     font-weight: 500;
     height: 43px;
+}
+
+.error-register {
+    color: red;
+}
+
+.form-group {
+    display: block;
+    margin-top: 1rem;
+}
+
+.form-group-first {
+    margin-top: 2rem;
+}
+
+.label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #181a50;
+}
+
+.form-input {
+    width: 100%;
+    display: inline-block;
+    padding: 8px 20px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.form-input:focus {
+    outline: 1px solid #3F51B5;
+}
+
+.register-button {
+    margin-top: 1rem;
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #3F51B5;
+    border: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.register-button:hover {
+    background-color: #2f3d88;
+}
+
+.register-button:active {
+    transform: scale(0.95);
 }

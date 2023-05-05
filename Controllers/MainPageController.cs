@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using ServiceReference1;
 using System.Text;
+using client.Models;
 
 namespace client.Controllers
 {
@@ -160,9 +161,107 @@ namespace client.Controllers
         {
             return RedirectToMainIfTokenExists(null);
         }
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile(UserDetailsModel model)
         {
-            return RedirectToMainIfTokenExists("~/Views/MainPage/Profile/Profile.cshtml");
+            var token = Request.Cookies["token"];
+            var modelView = new ProfileViewModel();
+            if (token == null)
+            {
+                // If it exists, redirect to MainPage
+                return RedirectToAction("Index", "Home");
+            }
+            try
+            {
+                var userDetails = await getUserDetails(token);
+                model = new UserDetailsModel
+                {
+                    name = userDetails.name,
+                    email = userDetails.email,
+                };
+
+                var modelUserDetails = JsonConvert.SerializeObject(model);
+                HttpContext.Session.Set("modelUserDetails", Encoding.UTF8.GetBytes(modelUserDetails));
+
+                modelView = new ProfileViewModel
+                {
+                    UserDetails = model,
+                };
+                return View("~/Views/MainPage/Profile/Profile.cshtml", modelView);
+            }
+            catch (System.Exception)
+            {
+                ViewData["ErrorMessage"] = "Ocurrió un error, intenta de nuevo más tarde";
+                // procesar la solicitud de registro
+                return View("~/Views/MainPage/Profile/Profile.cshtml", modelView);
+            }
+
+        }
+
+        public async Task<getUserDetailsResponse> getUserDetails(string token)
+        {
+            MultiplepdfPortClient client = new();
+            getUserDetailsRequest req = new();
+            req.token = token;
+            getUserDetailsResponse res = client.getUserDetails(req);
+            return res;
+        }
+
+        [HttpPost("update-user")]
+        public async Task<IActionResult> UpdateUserDetailsService(UserEditModel model)
+        {
+            if (Request.Cookies["token"] == null)
+            {
+                // If it exists, redirect to MainPage
+                return RedirectToAction("Index", "Home");
+            }
+            var modelView = new ProfileViewModel();
+            // Obtener el objeto serializado de la sesión
+            var modelUserDetails = HttpContext.Session.Get("modelUserDetails");
+            // Deserializar el objeto y obtener el objeto original
+            var modelUserDetailsJson = Encoding.UTF8.GetString(modelUserDetails);
+            var modelUserDetailsV = JsonConvert.DeserializeObject<UserDetailsModel>(modelUserDetailsJson);
+
+            modelView = new ProfileViewModel
+            {
+                UserEdit = model,
+                UserDetails = modelUserDetailsV,
+            };
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var token = Request.Cookies["token"];
+                    var res = await UpdateUserDetails(model, token);
+                    if (res.successful)
+                    {
+                        return RedirectToMainIfTokenExists("~/Views/MainPage/Profile/Profile.cshtml");
+                    }
+                    else
+                    {
+                        ViewData["ErrorMessage"] = res.response;
+                        // procesar la solicitud de registro
+                        return View("Views/Home/Register/RegisterForm.cshtml", modelView);
+                    }
+                }
+                catch (System.Exception)
+                {
+                    ViewData["ErrorMessage"] = "Ocurrió un error, intenta de nuevo más tarde";
+                    // procesar la solicitud de registro
+                    return View("~/Views/MainPage/Profile/Profile.cshtml", modelView);
+                }
+            }
+            return View("~/Views/MainPage/Profile/Profile.cshtml", modelView);
+        }
+
+        public async Task<editUserDetailsResponse> UpdateUserDetails(UserEditModel model, string token)
+        {
+            MultiplepdfPortClient client = new();
+            editUserDetailsRequest req = new();
+            req.name = model.Username;
+            req.email = model.Email;
+            req.token = token;
+            editUserDetailsResponse res = client.editUserDetails(req);
+            return res;
         }
         public async Task<IActionResult> MyFiles()
         {
