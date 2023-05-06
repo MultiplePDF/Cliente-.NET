@@ -8,7 +8,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -25,18 +24,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-// app.UseEndpoints(endpoints => {
-
-//     endpoints.MapControllerRoute(
-//         name: "MainPageHome",
-//         pattern: "/MainPage/Home",
-//         defaults: new { controller = "MainPage", action = "Home" }
-//     );
-
-// });
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
 app.Run();

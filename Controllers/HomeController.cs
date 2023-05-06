@@ -23,7 +23,6 @@ public class HomeController : Controller
         return null;
     }
 
-
     public IActionResult Index()
     {
         IActionResult result = RedirectToMainIfTokenExists();
@@ -41,6 +40,14 @@ public class HomeController : Controller
         IActionResult result = RedirectToMainIfTokenExists();
         if (result != null) return result;
         return View("~/Views/Home/ForgotPassword/ForgotPassword.cshtml");
+    }
+
+    [Route("")]
+    public IActionResult Inicio()
+    {
+        IActionResult result = RedirectToMainIfTokenExists();
+        if (result != null) return result;
+        return View("~/Views/Home/Main/Inicio.cshtml");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
