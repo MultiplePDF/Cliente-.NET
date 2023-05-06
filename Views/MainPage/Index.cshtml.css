@@ -172,8 +172,16 @@
 
 .msgConvert {
     font-weight: 600;
-    font-size: 36px;
+    font-size: 2.5em;
 }
+
+.msgConvertExtensions {
+    margin-top: 1em;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+
 
 .txtLogo {
     font-weight: 700;

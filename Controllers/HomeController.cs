@@ -42,6 +42,7 @@ public class HomeController : Controller
         return View("~/Views/Home/ForgotPassword/ForgotPassword.cshtml");
     }
 
+    [Route("")]
     public IActionResult Inicio()
     {
         IActionResult result = RedirectToMainIfTokenExists();

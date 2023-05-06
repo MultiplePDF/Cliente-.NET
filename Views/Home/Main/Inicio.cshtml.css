@@ -1,0 +1,94 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 4rem;
+    text-align: justify;
+}
+
+span {
+    text-align: justify;
+    font-size: 120%;
+}
+
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    filter: blur(3px);
+}
+
+.glass-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: fit-content;
+}
+
+.text {
+    font-size: 5rem;
+    color: white;
+    font-weight: bold;
+}
+
+.text-welcome {
+    color: rgb(0, 0, 0) !important;
+    font-size: 1.5em;
+}
+
+.pdf {
+    font-weight: bold;
+    font-size: 2.5em;
+}
+
+.btnWelcome {
+    font-size: 3rem;
+    border-radius: 8rem;
+    padding: 25px 45px;
+    text-align: center;
+    border: none;
+    color: white;
+    outline: none !important;
+}
+
+.btnWelcome:hover {
+    background-color: #ff4931 !important;
+    border-color: #ff4931 !important;
+}
+
+.btnWelcome:active {
+    transform: scale(0.95);
+}
+
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.containterButton {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+/* .btnIcon {
+    font-size: 1rem;
+} */
