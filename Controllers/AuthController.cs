@@ -92,5 +92,30 @@ namespace client.Controllers
             registerResponse res = client.register(req);
             return res;
         }
+
+        [HttpPost("forgot-password")]
+        public async Task<ActionResult<string>> ForgotPasswordService(ForgotPasswordModel model)
+        {
+            try
+            {
+                var res = await ForgotPassword(model);
+                ViewData["Success"] = true;
+                return View("~/Views/Home/ForgotPassword/ForgotPassword.cshtml", model);
+            }
+            catch (System.Exception)
+            {
+                ViewData["ErrorMessage"] = "Ha ocurrido un error, inténtalo de nuevo más tarde";
+                return View("~/Views/Home/ForgotPassword/ForgotPassword.cshtml", model);
+            }
+        }
+
+        public async Task<forgotResponse> ForgotPassword(ForgotPasswordModel model)
+        {
+            MultiplepdfPortClient client = new();
+            forgotRequest req = new();
+            req.email = model.Email;
+            forgotResponse res = client.forgot(req);
+            return res;
+        }
     }
 }

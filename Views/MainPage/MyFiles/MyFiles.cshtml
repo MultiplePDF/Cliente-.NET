@@ -16,49 +16,52 @@
             </tr>
         </thead>
         <tbody>
-            @{
+            @try
+            {     
                 int counter = 0;
+                
+                @foreach (var obj in Model.objectList)
+                {
+                    <tr>
+                        <td class="nameFiles">@counter</td>
+                        <td class="nameFiles">
+                            @{
+                                var fechaHora = obj.createdAt.ToString().Split(" ");
+                                string fecha = fechaHora[0];
+                            }
+                            @fecha
+                        </td>
+                        <td>@obj.numberFiles</td>
+                        <td>
+                            @{
+                                DateTime validityDate = obj.validity;
+                                TimeSpan timeDifference = validityDate - DateTime.Now;
+                                double remainingTime = timeDifference.TotalHours;
+                                string remainingTimeDays = (timeDifference.TotalHours/24).ToString("0");
+                            }
+                            @remainingTimeDays
+                        </td>
+                        <td>
+                            <a class="link-my-files" href="@obj.batchPath" >
+                                <button type="button" class="btn-download rounded-4" 
+                                title="Descargar todo">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                            </a>
+                            <a class="link-my-files" href='@Url.Action("Details", "MainPage", new { index = counter })' >
+                                <button type="button" class="btn-folder rounded-4" 
+                                title="Ver todos los archivos" data-index="@counter">
+                                    <i class="fa-solid fa-folder-open"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    counter++;
+                }
             }
-            @foreach (var obj in Model.objectList)
+            catch (System.Exception)
             {
-                <tr>
-                    <td class="nameFiles">@counter</td>
-                    <td class="nameFiles">
-                        @{
-                            var fechaHora = obj.createdAt.ToString().Split(" ");
-                            string fecha = fechaHora[0];
-                        }
-                        @fecha
-                    </td>
-                    <td>@obj.numberFiles</td>
-                    <td>
-                        @{
-                            DateTime validityDate = obj.validity;
-                            TimeSpan timeDifference = validityDate - DateTime.Now;
-                            double remainingTime = timeDifference.TotalHours;
-                            string remainingTimeDays = (timeDifference.TotalHours/24).ToString("0");
-                            @* double validityHours = double.Parse(obj.status);
-                            double hoursRemaining = validityHours - remainingTime; *@
-                        }
-                        @remainingTimeDays
-                        @* @hoursRemaining.ToString("0.0") horas *@
-                    </td>
-                    <td>
-                        <a class="link-my-files" href="@obj.batchPath" >
-                            <button type="button" class="btn-download rounded-4" 
-                            title="Descargar todo">
-                                <i class="fa-solid fa-download"></i>
-                            </button>
-                        </a>
-                        <a class="link-my-files" href='@Url.Action("Details", "MainPage", new { index = counter })' >
-                            <button type="button" class="btn-folder rounded-4" 
-                            title="Ver todos los archivos" data-index="@counter">
-                                <i class="fa-solid fa-folder-open"></i>
-                            </button>
-                        </a>
-                    </td>
-                </tr>
-                counter++;
+                
             }
         </tbody>
     </table>

@@ -271,15 +271,19 @@ namespace client.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var list = await GetFilesDetails();
-            var listBatch = new BatchListModel
+            if (list.Count > 0)
             {
-                objectList = list
-            };
+                var listBatch = new BatchListModel
+                {
+                    objectList = list
+                };
 
-            //Save in Session
-            var listBatchJson = JsonConvert.SerializeObject(listBatch);
-            HttpContext.Session.Set("listBatch", Encoding.UTF8.GetBytes(listBatchJson)); // Almacenar lista en sesión
-            return View("~/Views/MainPage/MyFiles/MyFiles.cshtml", listBatch);
+                //Save in Session
+                var listBatchJson = JsonConvert.SerializeObject(listBatch);
+                HttpContext.Session.Set("listBatch", Encoding.UTF8.GetBytes(listBatchJson)); // Almacenar lista en sesión
+                return View("~/Views/MainPage/MyFiles/MyFiles.cshtml", listBatch);
+            }
+            return View("~/Views/MainPage/MyFiles/MyFiles.cshtml");
         }
 
         public async Task<List<dynamic>> GetFilesDetails()
@@ -289,8 +293,15 @@ namespace client.Controllers
             getBatchDetailsRequest req = new();
             req.token = token;
             getBatchDetailsResponse res = client.getBatchDetails(req);
-            List<dynamic> list = JsonConvert.DeserializeObject<List<dynamic>>(res.batchesList);
-            return list;
+            try
+            {
+                List<dynamic> list = JsonConvert.DeserializeObject<List<dynamic>>(res.batchesList);
+                return list;
+            }
+            catch (System.Exception)
+            {
+                return new List<dynamic>();
+            }
         }
         public IActionResult Downloads()
         {
