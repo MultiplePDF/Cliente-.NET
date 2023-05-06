@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ServiceReference1;
 
 namespace client.Models.Interfaces
 {
     public interface IAuthenticationService
     {
-        Task<string> Login(string email, string password);
+        Task<loginResponse> Login(LoginModel model);
     }
 }

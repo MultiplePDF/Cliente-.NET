@@ -34,15 +34,6 @@ tr {
     text-decoration: none;
 }
 
-.btn-folder {
-    display: inline;
-    padding: 0;
-    border: none;
-    background: none;
-    color: #ff7764;
-    font-size: 1.3rem;
-}
-
 .btn-download {
     display: inline-block;
     padding: 0;
@@ -53,7 +44,6 @@ tr {
     font-size: 1.3rem;
 }
 
-.btn-folder:active,
 .btn-download:active {
     color: #3F51B5;
     transform: translateY(2px);
@@ -61,7 +51,6 @@ tr {
 
 @media screen and (max-width: 768px) {
 
-    .btn-folder,
     .btn-download {
         font-size: 1em;
         margin-right: 0.5rem;

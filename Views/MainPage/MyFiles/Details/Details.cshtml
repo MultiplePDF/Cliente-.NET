@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "My Files";
+    Layout="_MainPageLayout";
+}
+
+@model DetailsViewModel
+
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead class="header-border">
+            <tr>
+                <th class="align-middle txtHead">#</th>
+                <th class="align-middle txtHead">Nombre</th>
+                <th class="align-middle txtHead">Tamaño (KB)</th>
+                <th class="align-middle txtHead">Descargar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int counter = 1;
+            }
+            @foreach (var obj in Model.FilesList[Model.currentIndex])
+            {
+                <tr>
+                    <td class="nameFiles">@counter</td>
+                    <td class="nameFiles">@obj.fileName</td>
+                    <td class="nameFiles">@(((double)obj.size / 1000).ToString("0.0"))</td>
+                    <td>
+                        <a href="@obj.filePath" target="_blank" class="link-my-files">
+                            <button type="button" class="btn-download rounded-4" 
+                            title="Descargar">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                counter++;
+            }
+        </tbody>
+    </table>
+</div>

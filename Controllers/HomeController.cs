@@ -35,6 +35,12 @@ public class HomeController : Controller
         if (result != null) return result;
         return View("~/Views/Home/Register/RegisterForm.cshtml");
     }
+    public IActionResult ForgotPassword()
+    {
+        IActionResult result = RedirectToMainIfTokenExists();
+        if (result != null) return result;
+        return View("~/Views/Home/ForgotPassword/ForgotPassword.cshtml");
+    }
 
     public IActionResult Inicio()
     {

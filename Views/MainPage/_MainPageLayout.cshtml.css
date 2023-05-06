@@ -1,11 +1,13 @@
-.txtLogo{
+.txtLogo {
     font-weight: 700;
     font-size: 24px;
 }
 
-.item-bar{
+.item-bar {
     font-weight: 500;
     font-size: 18px;
 }
 
-
+.logout {
+    font-size: 1.2em;
+}
