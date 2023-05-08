@@ -1,7 +1,6 @@
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using ServiceReference1;
 using System.Text;
@@ -79,20 +78,29 @@ namespace client.Controllers
             var json = JsonConvert.SerializeObject(results);
 
             //Send to batch 
-            var token = HttpContext.Request.Cookies["token"];
-            var res = ConvertFiles(json, token);
-
-            if (res.successful)
+            try
             {
+                var token = HttpContext.Request.Cookies["token"];
+                // var res = ConvertFiles(json, token);
+                ProcessFilesInBackground(json, token);
                 return View("Views/MainPage/Downloads/Downloads.cshtml");
             }
-            else
+            catch (System.Exception)
             {
-                ViewData["ErrorMessage"] = res.response;
+                ViewData["ErrorMessage"] = "Error inesperado";
                 return View("Views/MainPage/Index.cshtml");
-
+                throw;
             }
         }
+
+        public async Task<IActionResult> ProcessFilesInBackground(string json, string token)
+        {
+
+            Task<sendBatchResponse> conversionTask = Task.Run(() => ConvertFiles(json, token));
+
+            return View("Views/MainPage/Downloads/Downloads.cshtml");
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadLinks(string links)
         {
